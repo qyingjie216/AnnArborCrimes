@@ -46,7 +46,7 @@ This is a template for the EDAV final project. It is based on the template creat
 
 (You will need to repeat steps 2 and 4 every time you wish to update the book online.)
 
-### Edit README	
+### Edit README	  3
 
 Once you've completed these steps, delete the content of this **README** and add a short description of your project with a link to the book URL. It would be appreciated if you add the following to the end:	
 
