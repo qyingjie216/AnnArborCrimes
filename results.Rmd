@@ -16,6 +16,7 @@ library(dplyr)
 library(cowplot)
 library(DataExplorer)
 library(stringr)
+library(parcoords)
 library(patchwork)
 ```
 
@@ -27,6 +28,23 @@ crime <- read.csv("data/clean/PartABCrimeOffenses.csv")
 ```
 
 ## Is Ann Arbor a relatively dangerous city in Michigan?
+
+For the purpose of comparison with Ann Arbor, we care more about the public safety situation of big cities in Michigan.
+
+```{r}
+df2019 %>%
+  select(!c(Violent_crime, Property_crime, Violent_crime_rate, Property_crime_rate)) %>%
+  slice(1:20) %>%
+  parcoords(
+    rownames = F   
+    , brushMode = "1D-axes"  
+    , reorderable = T  
+    , queue = T  
+    , alpha = .5
+    , width = 800
+    )
+```
+Among the 20 cities with highest population, Detroit is the only outlier. We would like to explore in another way that if Ann Arbor has a higher crime rate.
 
 ```{r}
 ggplot(data=df2019%>%slice(1:20)%>%

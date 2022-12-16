@@ -118,3 +118,10 @@ d3.select("svg").select("g").selectAll("rect")
   
 
 </script>
+
+For the D3 project, I managed to visualize the barchart of the number of crime cases of each month in the year 2022. In particular, I added 12 columns to illustrate the number of cases in each month. On each column, I labeled the case numbers. The interaction and transitivity parts lie as follows: 
+
+When the web page is open, the colors of all columns slowly transform from white to light blue. When users click on any of the twelve columns, the column color will change from light blue to light green. 
+
+The findings are as follows: 
+The months that have the most cases in the year 2022 include September, October, and May. September has the largest number of crime cases: 538. October has 517 cases. May has 493 cases.

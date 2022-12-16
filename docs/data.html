@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data | Ann Arbor Crime Cases Analysis</title>
   <meta name="description" content="Chapter 3 Data | Ann Arbor Crime Cases Analysis" />
-  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.31 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data | Ann Arbor Crime Cases Analysis" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Yingjie Qu, Xinyu He, Zhihang Xia" />
 
 
-<meta name="date" content="2022-12-15" />
+<meta name="date" content="2022-12-16" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -52,6 +52,9 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<link href="libs/parallel-coordinates-2.1.8/parcoords.css" rel="stylesheet" />
+<script src="libs/parcoords-binding-1.0.1/parcoords.js"></script>
 
 
 <style type="text/css">
@@ -144,8 +147,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 <li class="chapter" data-level="3" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>3</b> Data</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a></li>
-<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
+<li class="chapter" data-level="3.1" data-path="data.html"><a href="data.html#sources"><i class="fa fa-check"></i><b>3.1</b> Sources</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="data.html"><a href="data.html#data-from-ann-arbor-police-department"><i class="fa fa-check"></i><b>3.1.1</b> Data from Ann Arbor Police department</a></li>
+<li class="chapter" data-level="3.1.2" data-path="data.html"><a href="data.html#data-from-fbi-ucr-program"><i class="fa fa-check"></i><b>3.1.2</b> Data from FBI UCR Program</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="data.html"><a href="data.html#data-from-ann-arbor-police-department-1"><i class="fa fa-check"></i><b>3.2.1</b> Data from Ann Arbor Police department</a></li>
+<li class="chapter" data-level="3.2.2" data-path="data.html"><a href="data.html#data-from-fbi-ucr-program-1"><i class="fa fa-check"></i><b>3.2.2</b> Data from FBI UCR Program</a></li>
+</ul></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
@@ -189,21 +200,51 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 3</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="sources" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Sources<a href="data.html#sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="data-from-ann-arbor-police-department" class="section level3 hasAnchor" number="3.1.1">
+<h3><span class="header-section-number">3.1.1</span> Data from Ann Arbor Police department<a href="data.html#data-from-ann-arbor-police-department" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The City of Ann Arbor maintains a data catalog on its website that includes police department incident reports. These reports are available in various formats, including CSV, PDF, DOC, RSS, KML, and SHP. For the purpose of this analysis, we will use the CSV format, which is compatible with spreadsheet, database, and statistical software. The dataset includes about 5400 observations with variables case number, crime type, incident address, date, etc. The data catalog is regularly updated, although the specific update frequency is not specified. The most recent update was made on 10/31/2022. Researchers with questions about the data can contact the police department using the contact information provided in the ‘Agency/Unit’ column of the table. Some known issues with the data quality exist due to security concerns. For example, datasets that identify critical infrastructure assets will not be published, and crime statistics will be aggregated to a city-block level. Additionally, some personally identifiable information and sensitive data, such as residents’ personal information, will be removed.</p>
+</div>
+<div id="data-from-fbi-ucr-program" class="section level3 hasAnchor" number="3.1.2">
+<h3><span class="header-section-number">3.1.2</span> Data from FBI UCR Program<a href="data.html#data-from-fbi-ucr-program" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The datasets are collected by FBI through UCR Program, each provides the number of violent crime (murder and nonnegligent manslaughter, rape, robbery, and aggravated assault) and property crime (burglary, larceny-theft, and motor vehicle theft) as reported by city and town law enforcement agencies that contributed data to the UCR Program in cities of Michigan for each year. One problem of the data sets is that the columns are not independent to each other: the value of column Violent Crime is the sum of the values of the subsequent 4 columns and the value of column Property Crime is the sum of the subsequent 3 columns. What’s more, Arson is an independent crime type in the table, not included in violent crime or property crime. Another problem is that the data is updated only to 2019.</p>
+</div>
 </div>
 <div id="cleaning-transformation" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Cleaning / transformation<a href="data.html#cleaning-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Cleveland plot: Numbers of cases under different categories</p>
+<div id="data-from-ann-arbor-police-department-1" class="section level3 hasAnchor" number="3.2.1">
+<h3><span class="header-section-number">3.2.1</span> Data from Ann Arbor Police department<a href="data.html#data-from-ann-arbor-police-department-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<ol style="list-style-type: lower-alpha">
+<li>Cleveland plot: Numbers of cases under different categories</li>
+</ol>
 <p>As we can see from the overview of the dataset, the crimes are divided into different categories, where each category is followed by a description for the sub-category. Since we aim to see the counts of the events for each category in total, we need to preprocess the data by transforming the column CATEGORY to a uniform form.</p>
 <p>To do this, we split strings in the CATEGORY column of a crime data frame by either ” - ” or ” / “, depending on which delimiter is present. If either delimiter is found, the code replaces the original string with the first element from the resulting split.</p>
-<p>Time Series plot
-Column DATE provides us both the date and time for the crime incidents, while we only need the date for our monthly time series plot. Thus we will remove the extra information and extract the dates and months by splitting the string. First, the code uses a for loop to iterate over the DATE column in the crime data frame. For each value in the DATE column, the code uses the str_split() function to split the value by the space character (’ ‘). This results in a list of two elements: the date and the time. The code then assigns the first element (the date) to the corresponding position in the date column. Next, the code uses a second for loop to iterate over the DATE column again. For each value in the DATE column, the code uses the str_split() function to split the value by the dash character (’-’). This results in a list of three elements: the year, the month, and the day. The code then assigns the second element (the month) to the corresponding position in the month column.</p>
-<p>When working on the time series plot for the number of cases during each day, I transformed the “DATE” column in the following ways: I first loop through each row, split the string by “ “, and retain the first element as “date”. I stored them in a new column named “date”. To find the number of cases during each month, I looped through each row in the “date” column, split the string by “-“, and retained the first element as “month”. I stored them in a new column named “month”.</p>
-<p>When working on the time series plot for the number of cases during each hour, I transformed the “DATE” column in the following ways: I first looped through each row, split the string by “ “, and retained the second element as “time”. I then split the data by “:” and retained the second element as “hour”.</p>
+<ol start="2" style="list-style-type: lower-alpha">
+<li>Time Series plot</li>
+</ol>
+<p>Column DATE provides us both the date and time for the crime incidents, while we only need the date for our monthly time series plot. Thus we will remove the extra information and extract the dates and months by splitting the string. First, the code uses a for loop to iterate over the DATE column in the crime data frame. For each value in the DATE column, the code uses the str_split() function to split the value by the space character (’ ‘). This results in a list of two elements: the date and the time. The code then assigns the first element (the date) to the corresponding position in the date column. Next, the code uses a second for loop to iterate over the DATE column again. For each value in the DATE column, the code uses the str_split() function to split the value by the dash character (’-’). This results in a list of three elements: the year, the month, and the day. The code then assigns the second element (the month) to the corresponding position in the month column.</p>
+<p>When working on the time series plot for the number of cases during each day, I transformed the “DATE” column in the following ways: I first loop through each row, split the string by ” “, and retain the first element as”date”. I stored them in a new column named “date”. To find the number of cases during each month, I looped through each row in the “date” column, split the string by “-”, and retained the first element as “month”. I stored them in a new column named “month”.</p>
+<p>When working on the time series plot for the number of cases during each hour, I transformed the “DATE” column in the following ways: I first looped through each row, split the string by ” “, and retained the second element as”time”. I then split the data by “:” and retained the second element as “hour”.</p>
+<ol start="3" style="list-style-type: lower-alpha">
+<li>Heatmaps</li>
+</ol>
+<p>The available data is the latitudes and longitudes of crimes. To get a better sense of the number of cases occurred in each area, I first split the longitude ranges and latitude ranges into 5 segments for each. Then, I loop through the entire dataset and counted the number of crimes that occurred within each of the 25 areas based on the longitude ranges and latitude ranges.</p>
+</div>
+<div id="data-from-fbi-ucr-program-1" class="section level3 hasAnchor" number="3.2.2">
+<h3><span class="header-section-number">3.2.2</span> Data from FBI UCR Program<a href="data.html#data-from-fbi-ucr-program-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Each data set contains the numbers of different types of crimes in cities of Michigan for each year. I construct two dataframes for usage.</p>
+<p>The columns for the 10 files are all in the character form, so for the very first step, I transfered all columns to the nemeric form.</p>
+<ol style="list-style-type: lower-alpha">
+<li><p>For the first data frame, I first computed the crime rates(Crime number / Population) for two summarized type of crimes - violent crime and property crime and added the values to two new columns. Then I chose 20 rows with highest population for comparison.</p></li>
+<li><p>For the second data frame, I selected the data of Ann Arbor for each year from the 10 files, then I changed the column names to the same one, added a new column showing the year of data to each file, and combined them all together.</p></li>
+<li><p>The third data frame is tidydata. I used the data of 2019 from the first data frame constructed as explained above, and transformed it to tidydata version.</p></li>
+</ol>
+</div>
 </div>
 <div id="missing-value-analysis" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Missing value analysis<a href="data.html#missing-value-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The dataset PartABCrimeOffenses has no extra title name which might occupy the columns or rows, and the data for all columns, includinhg CASE_NUM, CRIME_DESC, CHARGE_CODE, CHARGE_DESC, CRIME_PART, ADDRESS, CITY, DATE, CATEGORY, POINT_X, POINt_Y, are all filled. Thus the dataset is complete with no missing values, and there is no need for removing missing data.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-3.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p>The dataset PartABCrimeOffenses(from Ann Arbor police department) has no extra title name which might occupy the columns or rows, and the data for all columns, includinhg CASE_NUM, CRIME_DESC, CHARGE_CODE, CHARGE_DESC, CRIME_PART, ADDRESS, CITY, DATE, CATEGORY, POINT_X, POINt_Y, are all filled. Thus the dataset is complete with no missing values, and there is no need for removing missing data.</p>
+<p>For the dataset from FBI URB Program, there are 0.47% missing values for Variable Burglary in the data “df2019.csv”, but since we only use the data of 20 cities with highest population of the data set, it is totally acceptable and thus we do not have to solve the missing data problem.</p>
 
 </div>
 </div>
