@@ -7,5 +7,14 @@ sources
 cleaning-transformation
 missing-value-analysis
 results
+is-ann-arbor-a-relatively-dangerous-city-in-michigan
+what-type-of-crimes-happen-the-most
+which-month-does-the-crime-cases-happen-the-most-frequently
+what-day-do-the-crime-cases-happen-the-most-often
+in-what-time-of-a-day-do-the-cases-happen-more-often
+time-series-plot-among-24-hours-of-a-day
+in-which-part-of-the-city-do-the-cases-happen-more-often
+heatmap-for-different-locations-x-y-coordiantes
+is-public-security-in-ann-arbor-getting-better-during-these-years
 interactive-component
 conclusion
