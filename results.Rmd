@@ -1,6 +1,5 @@
 # Results
 
-
 ```{r}
 knitr::opts_chunk$set(
   echo = FALSE,
@@ -13,7 +12,6 @@ knitr::opts_chunk$set(
 library(tidyverse)
 library(ggplot2)
 library(GGally)
-library(parcoords)
 library(dplyr)
 library(cowplot)
 library(DataExplorer)
@@ -28,26 +26,7 @@ dfAnn2019 <- read.csv("data/clean/dfAnn2019.csv")
 crime <- read.csv("data/clean/PartABCrimeOffenses.csv")
 ```
 
-## Is Ann Arbor a relatively more dangerous city in Michigan?
-
-We care more about the big cities in Michigan, so the 20 cities with highest population are selected for comparison.
-```{r}
-df2019 %>%
-  select(!c(Violent_crime, Property_crime, Violent_crime_rate, Property_crime_rate)) %>%
-  slice(1:20) %>%
-  parcoords(
-    rownames = F   
-    , brushMode = "1D-axes"  
-    , reorderable = T  
-    , queue = T  
-    , alpha = .5
-    , width = 800
-    )
-```
-
-
-As the plot shown above, Detroit is the only outlier. We would like to explore in another way that if Ann Arbor has a relatively higher crime rate.
-
+## Is Ann Arbor a relatively dangerous city in Michigan?
 
 ```{r}
 ggplot(data=df2019%>%slice(1:20)%>%
@@ -72,7 +51,7 @@ ggplot(data=dfAnn2019)+
   labs(x="City", y="Crime rate", title="Different types of crime rates in Ann Arbor", fill="Crime Type")
 ```
 
-Property crime in Ann Arbor is much more common than violent crime. In 2019, the FBI reported a total of 2124 property crimes, compared with 309 violent crimes.
+As we can tell from the plot, property crime in Ann Arbor is much more common than violent crime. In 2019, the FBI reported a total of 2124 property crimes, compared with 309 violent crimes.
 
 The most common type of property crime in 2019 was larceny theft, followed by burglary and motor vehicle theft. Among violent crimes, aggravated assault was the most common type, followed by robbery, rape, and murder.
 
@@ -140,7 +119,7 @@ ggplot(cases_monthly_counts_df, aes(month, count))+ geom_line(color="black",grou
 ```
 
 
-Both the barplot and the time series plot summarize the monthly number of crime cases in a chronological order. The time series plot gives a clearer and more straight-forward view of the change of numbers among different months. It can be told from the graph that September, October, and May have the most cases compared to any other month of year 2022. Number of cases reache the lowest in April. From the overview of the whole year, the frequency of cases in the second half of the year is  more than that in the first half of the year
+Both the barplot and the time series plot summarize the monthly number of crime cases in a chronological order. The time series plot gives a clearer and more straight-forward view of the change of numbers among different months. It can be told from the graph that September, October, and May have the most cases compared to any other month of year 2022. Number of cases reache the lowest in April. From the overview of the whole year, the frequency of cases in the second half of the year is  more than that in the first half of the year.
 
 
 ## What day do the crime cases happen the most often? 
@@ -178,14 +157,16 @@ p_may <- ggplot(cases_may_daily_counts_df, aes(date, count))+ geom_line(color="b
 ```
 
 ```{r}
-plot_grid(p_may,p_sep,p_oct,ncol=1,heights=c(10,10,10))
+plot_grid(p_may,p_sep,p_oct,ncol=1)
 ```
 
-According to time series plot in May, 05/01, 05/07, 05/10, 05/13, 05/19, 05/22, 05/25 have a relatively high occurrence of cases.
+According to time series plot:
 
-According to time series plot in September, we can see the cases is relatively high on 09/04, 09/11, 09/17, 09/24, and 09/29, which reach the highest on 09/17.
+1. in May, 05/01, 05/07, 05/10, 05/13, 05/19, 05/22, 05/25 have a relatively high occurrence of cases.
 
-According to time series plot in October, we can see the cases is extremely high on 10/30, comparing to any other days in that month. 10/06, 10/09, 10/15, 10/22 have a relatively high occurrence of cases.
+2. in September, we can see the cases is relatively high on 09/04, 09/11, 09/17, 09/24, and 09/29, which reach the highest on 09/17.
+
+3. in October, we can see the cases is extremely high on 10/30, comparing to any other days in that month. 10/06, 10/09, 10/15, 10/22 have a relatively high occurrence of cases.
 
 When comparing the cases peeks among all the dates, we find that there is no fixed pattern for daily number of occurrence of crime cases. Although the highest number of occurrence among a month are not always on weekends, we notice that crimes occur relatively more frequently on weekends especially on Sunday.
 
@@ -424,9 +405,9 @@ p4 <- ggplot(dfAnn, aes(x=as.factor(Year), y=Property_crime_rate))+
 
 
 ggp_all <- (p1 + p2) / (p3 + p4) +    # Create grid of plots with title
-  plot_annotation(title = "My Multiplot Title") & 
+  plot_annotation(title = "Crime trend in Ann Arbor between 2010 and 2019") & 
   theme(plot.title = element_text(hjust = 0.5))
 ggp_all
 ```
 
-During the past 10 years between 2010 and 2019, Violent crime rate in Ann Arbor has an increasing trend while Property crime rate has a decreasing trend.
+During the past 10 years between 2010 and 2019, Violent crime number and rate in Ann Arbor has an increasing trend while Property crime number and rate has a decreasing trend. Clearly, public safety does not change a lot in the past 10 years.
